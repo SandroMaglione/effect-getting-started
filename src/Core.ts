@@ -12,9 +12,7 @@ const program = Effect.gen(function* (_) {
   return response;
 }).pipe(Logger.withMinimumLogLevel(LogLevel.Info));
 
-const runnable = program.pipe(Effect.provide(EmailService.EmailServiceLive));
-
-export const main: Effect.Effect<never, never, void> = runnable.pipe(
+export const main = program.pipe(
   Effect.catchTags({
     Unsupported: (error) => Console.error(error.message),
     InvalidData: (error) => Console.error(error.message),

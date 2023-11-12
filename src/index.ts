@@ -1,7 +1,9 @@
-import { Effect } from "effect";
 import { main } from "./Core";
+import { runPromise } from "./Runtime";
 
-Effect.runPromise(main).catch((defect) => {
-  console.error(defect);
-  process.exit(1);
-});
+runPromise(main)
+  .then(console.log)
+  .catch((defect) => {
+    console.error(defect);
+    process.exit(1);
+  });

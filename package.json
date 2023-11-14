@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "index": "SENDER=example@gmail.com ts-node src/index.ts",
-    "parse": "ts-node src/parse.ts"
+    "parse": "ts-node src/parse.ts",
+    "division": "ts-node src/division.ts"
   },
   "devDependencies": {
     "@types/node": "^20.9.0",

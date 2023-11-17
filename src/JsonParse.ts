@@ -1,4 +1,7 @@
-import { Context, Data, Effect, Layer } from "effect";
+import { Brand, Context, Data, Effect, Layer } from "effect";
+
+type JsonString = string & Brand.Brand<"JsonString">;
+const JsonString = Brand.nominal<JsonString>();
 
 export class JsonParseError extends Data.TaggedError("JsonParseError")<{
   source: string;
@@ -8,7 +11,7 @@ export class JsonParseError extends Data.TaggedError("JsonParseError")<{
 export interface JsonParseService {
   readonly parse: (
     source: string
-  ) => Effect.Effect<never, JsonParseError, string>;
+  ) => Effect.Effect<never, JsonParseError, JsonString>;
 }
 
 export const JsonParseService = Context.Tag<JsonParseService>(
@@ -20,7 +23,7 @@ export const JsonParseServiceLive = Layer.succeed(
   JsonParseService.of({
     parse: (source) =>
       Effect.try({
-        try: () => JSON.parse(source),
+        try: () => JsonString(JSON.parse(source)),
         catch: (error) => new JsonParseError({ source, error }),
       }),
   })

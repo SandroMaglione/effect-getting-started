@@ -1,17 +1,17 @@
 import { Effect, Layer, Runtime, Scope } from "effect";
 import * as EmailService from "./EmailService";
 
-const layer = EmailService.EmailServiceLive;
+const appLayer = EmailService.EmailServiceLive;
 
-const runtimeEffect = Effect.gen(function* (_) {
-  const scope = yield* _(Scope.make());
-  const runtime = yield* _(Layer.toRuntime(layer), Scope.extend(scope));
-  return runtime;
-});
+export const scope = Effect.runSync(Scope.make());
+
+const runtimePromise = Effect.runPromise(
+  Layer.toRuntime(appLayer).pipe(Scope.extend(scope))
+);
 
 export async function runPromise<E, A>(
-  effect: Effect.Effect<Layer.Layer.Success<typeof layer>, E, A>
+  effect: Effect.Effect<Layer.Layer.Success<typeof appLayer>, E, A>
 ): Promise<A> {
-  const runtime = await Effect.runPromise(runtimeEffect);
+  const runtime = await runtimePromise;
   return Runtime.runPromise(runtime)(effect);
 }

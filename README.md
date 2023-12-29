@@ -39,7 +39,7 @@ Inside this registry Effect collects all `Tag`s, created using `Context.Tag` by 
 > [!Note]
 > When you pass an `identifier` to `Context.Tag` you specify a key for the `tagRegistry`. Effect [checks the registry](https://github.com/Effect-TS/effect/blob/14e4393ebe3ba2635c73297bf7cd6750c883e669/packages/effect/src/internal/context.ts#L63-L65) when accessing and creating a new tag.
 
-A `Tag` is an instance of [`Pipeable`](https://github.com/Effect-TS/effect/blob/main/packages/effect/src/Pipeable.ts#L9). This allows to chain `.pipe` to an instance of `Tag` to extract the methods of a service.
+A `Tag` is an instance of [`Pipeable`](https://github.com/Effect-TS/effect/blob/main/packages/effect/src/Pipeable.ts#L9). This allows to chain `.pipe` to an instance of `Tag` to extract the methods of a service:
 
 ```ts
 interface Base64Service {
@@ -57,3 +57,28 @@ const result = Base64.Base64Service.pipe(
   Effect.runSync
 );
 ```
+
+`Tag` (`Context`) is also a valid [instance of `Effect`](https://github.com/Effect-TS/effect/blob/14e4393ebe3ba2635c73297bf7cd6750c883e669/packages/effect/src/Effect.ts#L150-L157). This allows to use methods such as `flatMap`.
+
+### `ContextProto`
+An instance of `Context` is created by copying a [context prototype](https://github.com/Effect-TS/effect/blob/14e4393ebe3ba2635c73297bf7cd6750c883e669/packages/effect/src/internal/context.ts#L87-L122) (using [`Object.create`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create) inside the *internal* [`makeContext`](https://github.com/Effect-TS/effect/blob/14e4393ebe3ba2635c73297bf7cd6750c883e669/packages/effect/src/internal/context.ts#L125-L129))
+
+### `Iterable`
+The [Iteration protocols](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols) define an `Iterable` interface:
+
+```ts
+interface Iterator<T, TReturn = any, TNext = undefined> {
+  next(...args: [] | [TNext]): IteratorResult<T, TReturn>;
+  return?(value?: TReturn): IteratorResult<T, TReturn>;
+  throw?(e?: any): IteratorResult<T, TReturn>;
+}
+
+interface Iterable<T> {
+  [Symbol.iterator](): Iterator<T>;
+}
+```
+
+The `Effect` type [defines an iterator](https://github.com/Effect-TS/effect/blob/14e4393ebe3ba2635c73297bf7cd6750c883e669/packages/effect/src/Effect.ts#L1123). This allows to use `yield*` in `Effect.gen` ([`EffectGen`](https://github.com/Effect-TS/effect/blob/14e4393ebe3ba2635c73297bf7cd6750c883e669/packages/effect/src/internal/core-effect.ts#L778-L784) and [`SingleShotGen`](https://github.com/Effect-TS/effect/blob/14e4393ebe3ba2635c73297bf7cd6750c883e669/packages/effect/src/Utils.ts#L102-L146)).
+
+This is also used by Effect to define methods such as [`map`](https://github.com/Effect-TS/effect/blob/14e4393ebe3ba2635c73297bf7cd6750c883e669/packages/effect/src/internal/Iterable.ts#L43-L54).
+

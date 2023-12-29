@@ -16,7 +16,7 @@ export const EmailServiceLive = Layer.effect(
   Effect.gen(function* (_) {
     const sendEmail: EmailService["sendEmail"] = (message) =>
       Effect.gen(function* (_) {
-        const from = yield* _(Effect.config(Config.string("SENDER")));
+        const from = yield* _(Config.string("SENDER"));
         return `Send "${message}" from "${from}"`;
       });
 

@@ -1,8 +1,8 @@
-import { Context, Data, Effect, Layer } from "effect";
-import { Base64 } from "js-base64";
+import { Context, Data, Effect, Encoding, Layer } from "effect";
 
-export class Base64DecodeError extends Data.TaggedError("Base64DecodeError")<{
+class Base64DecodeError extends Data.TaggedError("Base64DecodeError")<{
   source: string;
+  error: Encoding.DecodeException;
 }> {}
 
 export interface Base64Service {
@@ -17,9 +17,8 @@ export const Base64ServiceLive = Layer.succeed(
   Base64Service,
   Base64Service.of({
     decode: (source) =>
-      Effect.try({
-        try: () => Base64.decode(source),
-        catch: () => new Base64DecodeError({ source }),
-      }),
+      Encoding.decodeBase64String(source).pipe(
+        Effect.mapError((error) => new Base64DecodeError({ source, error }))
+      ),
   })
 );

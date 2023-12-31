@@ -5,6 +5,7 @@
     "index": "SENDER=example@gmail.com ts-node src/index.ts",
     "parse": "ts-node src/parse.ts",
     "division": "ts-node src/division.ts",
+    "batching": "ts-node src/batching.ts",
     "tsc": "tsc -p tsconfig.json",
     "test": "vitest",
     "coverage": "vitest run --coverage"
@@ -17,6 +18,7 @@
   },
   "dependencies": {
     "@effect/platform": "^0.39.0",
+    "@effect/schema": "^0.56.1",
     "effect": "2.0.0-next.62",
     "zod": "^3.22.4"
   }

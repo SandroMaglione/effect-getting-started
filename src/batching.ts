@@ -15,7 +15,16 @@ class PokemonClientError extends Data.TaggedError("PokemonClientError")<{
   error: unknown;
 }> {}
 
-class Pokemon extends Schema.Class<Pokemon>()({ name: Schema.string }) {}
+class Pokemon extends Schema.Class<Pokemon>()({
+  name: Schema.string,
+  types: Schema.struct({ type: Schema.struct({ name: Schema.string }) }).pipe(
+    Schema.nonEmptyArray
+  ),
+}) {}
+
+class Type extends Schema.Class<Type>()({
+  name: Schema.string,
+}) {}
 
 const client = Http.client.fetchOk().pipe(
   Http.client.mapRequest(
@@ -53,9 +62,31 @@ const getPokemon = Effect.request(
   GetPokemonResolver
 );
 
+class GetType extends Request.TaggedClass("GetType")<
+  PokemonClientError,
+  Type,
+  { readonly name: string }
+> {}
+
+const GetTypeResolver = RequestResolver.fromEffect((req: GetType) =>
+  Http.request.get(`/type/${req.name}`).pipe(
+    client,
+    Effect.flatMap(Http.response.schemaBodyJson(Type)),
+    Effect.catchTags({
+      ParseError: (error) => new PokemonClientError({ error, reason: "Parse" }),
+      ResponseError: (error) =>
+        new PokemonClientError({ error, reason: "Response" }),
+    })
+  )
+);
+
+const getType = (name: string) =>
+  Effect.request(new GetType({ name }), GetTypeResolver);
+
 pipe(
   getPokemon,
-  Effect.flatMap((pokemon) => Console.info("Got a pokemon", pokemon)),
+  Effect.flatMap((pokemon) => getType(pokemon.types[0].type.name)),
+  Effect.flatMap((type) => Console.info("Got a pokemon type", type)),
   Effect.catchTags({
     PokemonClientError: (error) => Console.error(error.reason, error.error),
   }),

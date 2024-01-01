@@ -1,13 +1,16 @@
 import * as Http from "@effect/platform/HttpClient";
 import * as Schema from "@effect/schema/Schema";
 import {
+  Cache,
   Console,
   Data,
+  Duration,
   Effect,
+  Either,
   Request,
   RequestResolver,
+  Schedule,
   flow,
-  pipe,
 } from "effect";
 
 class PokemonClientError extends Data.TaggedError("PokemonClientError")<{
@@ -57,10 +60,8 @@ const GetPokemonResolver = RequestResolver.fromEffect((req: GetPokemon) =>
   )
 );
 
-const getPokemon = Effect.request(
-  new GetPokemon({ id: 23 }),
-  GetPokemonResolver
-);
+const getPokemon = (id: number) =>
+  Effect.request(new GetPokemon({ id }), GetPokemonResolver);
 
 class GetType extends Request.TaggedClass("GetType")<
   PokemonClientError,
@@ -83,12 +84,45 @@ const GetTypeResolver = RequestResolver.fromEffect((req: GetType) =>
 const getType = (name: string) =>
   Effect.request(new GetType({ name }), GetTypeResolver);
 
-pipe(
-  getPokemon,
-  Effect.flatMap((pokemon) => getType(pokemon.types[0].type.name)),
-  Effect.flatMap((type) => Console.info("Got a pokemon type", type)),
-  Effect.catchTags({
-    PokemonClientError: (error) => Console.error(error.reason, error.error),
-  }),
-  Effect.runPromise
-).then(() => {});
+const globalCache = new Map<number, Pokemon>();
+
+const cacheSource = Cache.make({
+  capacity: globalThis.Number.MAX_SAFE_INTEGER,
+  timeToLive: Infinity,
+  lookup: (key: number) => Effect.fromNullable(globalCache.get(key)),
+});
+
+Effect.gen(function* (_) {
+  const cache = yield* _(cacheSource);
+  const inCache = yield* _(cache.get(20), Effect.either);
+  if (Either.isRight(inCache)) {
+    yield* _(Console.info("Got a pokemon (cache)", inCache.right));
+    return;
+  }
+
+  const cacheSize = yield* _(cache.size);
+  const cacheContent = yield* _(cache.entries);
+  yield* _(Console.info("No pokemon in cache", cacheSize, cacheContent));
+
+  const pokemon = yield* _(getPokemon(20));
+
+  yield* _(Console.info("Got a pokemon", pokemon));
+  yield* _(
+    cache.set(20, pokemon),
+    Effect.tap(() => Console.info("Set cache", pokemon))
+  );
+
+  const type = yield* _(getType(pokemon.types[0].type.name));
+
+  yield* _(Console.info("Got a pokemon type", type));
+})
+  .pipe(
+    Effect.catchTags({
+      PokemonClientError: (error) => Console.error(error.reason, error.error),
+    }),
+    Effect.repeat(
+      Schedule.recurs(5).pipe(Schedule.addDelay(() => Duration.millis(1000)))
+    ),
+    Effect.runPromise
+  )
+  .then(() => {});

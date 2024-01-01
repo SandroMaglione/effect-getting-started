@@ -3,10 +3,10 @@ import * as Schema from "@effect/schema/Schema";
 import {
   Cache,
   Console,
+  Context,
   Data,
   Duration,
   Effect,
-  Either,
   Request,
   RequestResolver,
   Schedule,
@@ -84,33 +84,25 @@ const GetTypeResolver = RequestResolver.fromEffect((req: GetType) =>
 const getType = (name: string) =>
   Effect.request(new GetType({ name }), GetTypeResolver);
 
-const globalCache = new Map<number, Pokemon>();
-
 const cacheSource = Cache.make({
   capacity: globalThis.Number.MAX_SAFE_INTEGER,
   timeToLive: Infinity,
-  lookup: (key: number) => Effect.fromNullable(globalCache.get(key)),
+  lookup: (key: number) =>
+    Effect.gen(function* (_) {
+      const pokemon = yield* _(getPokemon(key));
+      yield* _(Console.info("Request a pokemon", pokemon));
+      return pokemon;
+    }),
 });
 
+const CacheContext =
+  Context.Tag<Effect.Effect.Success<typeof cacheSource>>("@app/cache");
+
 Effect.gen(function* (_) {
-  const cache = yield* _(cacheSource);
-  const inCache = yield* _(cache.get(20), Effect.either);
-  if (Either.isRight(inCache)) {
-    yield* _(Console.info("Got a pokemon (cache)", inCache.right));
-    return;
-  }
+  const cache = yield* _(CacheContext);
+  const pokemon = yield* _(cache.get(20));
 
-  const cacheSize = yield* _(cache.size);
-  const cacheContent = yield* _(cache.entries);
-  yield* _(Console.info("No pokemon in cache", cacheSize, cacheContent));
-
-  const pokemon = yield* _(getPokemon(20));
-
-  yield* _(Console.info("Got a pokemon", pokemon));
-  yield* _(
-    cache.set(20, pokemon),
-    Effect.tap(() => Console.info("Set cache", pokemon))
-  );
+  yield* _(Console.info(pokemon));
 
   const type = yield* _(getType(pokemon.types[0].type.name));
 
@@ -123,6 +115,7 @@ Effect.gen(function* (_) {
     Effect.repeat(
       Schedule.recurs(5).pipe(Schedule.addDelay(() => Duration.millis(1000)))
     ),
+    Effect.provideServiceEffect(CacheContext, cacheSource),
     Effect.runPromise
   )
   .then(() => {});

@@ -1,5 +1,9 @@
 import * as Fs from "@effect/platform-node/FileSystem";
-import { Console, Effect } from "effect";
+import { Console, Effect, Metric } from "effect";
+
+const numberCounter = Metric.counter("request_count", {
+  description: "A counter for tracking requests",
+});
 
 Effect.gen(function* (_) {
   const fs = yield* _(Fs.FileSystem);

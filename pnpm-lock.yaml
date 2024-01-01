@@ -8,6 +8,9 @@ dependencies:
   '@effect/platform':
     specifier: ^0.39.0
     version: 0.39.0(@effect/schema@0.56.1)(effect@2.0.0-next.62)
+  '@effect/platform-node':
+    specifier: ^0.39.0
+    version: 0.39.0(@effect/platform@0.39.0)(effect@2.0.0-next.62)
   '@effect/schema':
     specifier: ^0.56.1
     version: 0.56.1(effect@2.0.0-next.62)(fast-check@3.15.0)
@@ -40,6 +43,18 @@ packages:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
     dev: true
+
+  /@effect/platform-node@0.39.0(@effect/platform@0.39.0)(effect@2.0.0-next.62):
+    resolution: {integrity: sha512-5ZggtTpdXntLpv1aWfEc6xIHVKCuRfv71v584ZrTr996uAdyPgwV4YLSt09wMmZpG7lBeu8w9A+twvEAPLzJrQ==}
+    peerDependencies:
+      '@effect/platform': ^0.39.0
+      effect: 2.0.0-next.62
+    dependencies:
+      '@effect/platform': 0.39.0(@effect/schema@0.56.1)(effect@2.0.0-next.62)
+      effect: 2.0.0-next.62
+      mime: 3.0.0
+      multipasta: 0.1.21
+    dev: false
 
   /@effect/platform@0.39.0(@effect/schema@0.56.1)(effect@2.0.0-next.62):
     resolution: {integrity: sha512-bwvIVdyWAMv42Wi6/EIP8GJagPGEFU8tlkPycH5KcyZWmyi48ai3X1PbVqGdh2A18MsAyTOsVdfBI+bhnCS0Jw==}
@@ -688,6 +703,12 @@ packages:
   /merge-stream@2.0.0:
     resolution: {integrity: sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==}
     dev: true
+
+  /mime@3.0.0:
+    resolution: {integrity: sha512-jSCU7/VB1loIWBZe14aEYHU/+1UMEHoaO7qxCOVJOw9GgH72VAWppxNcjU+x9a2k3GSIBXNKxXQFqRvvZ7vr3A==}
+    engines: {node: '>=10.0.0'}
+    hasBin: true
+    dev: false
 
   /mimic-fn@4.0.0:
     resolution: {integrity: sha512-vqiC06CuhBTUdZH+RYl8sFrL096vA45Ok5ISO6sE/Mr1jRbGH4Csnhi8f3wKVl7x8mO4Au7Ir9D3Oyv1VYMFJw==}

@@ -2,16 +2,16 @@ import { Context, Effect } from "effect";
 import { describe, expect, it } from "vitest";
 
 interface FService {
-  sf: (param: number) => Effect.Effect<never, never, string>;
-  sc: Effect.Effect<never, never, number>;
+  sf: (param: number) => Effect.Effect<string>;
+  sc: Effect.Effect<number>;
 }
 
 interface PService {
   PORT: number;
 }
 
-const FService = Context.Tag<FService>();
-const service = Context.Tag<PService>();
+const FService = Context.GenericTag<FService>("@services/FService");
+const service = Context.GenericTag<PService>("@services/service");
 
 const func = (s: PService) => (str: string) => `${s.PORT}_$${str}$`;
 

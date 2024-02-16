@@ -1,7 +1,7 @@
 import { Data, Either } from "effect";
 import type { z } from "zod";
 
-export class ZodParseError<In> extends Data.TaggedError("ZodParseError")<{
+class ZodParseError<In> extends Data.TaggedError("ZodParseError")<{
   error: z.ZodError<In>;
 }> {}
 

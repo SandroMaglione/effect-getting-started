@@ -1,5 +1,5 @@
 import { Effect, Layer, Runtime, Scope } from "effect";
-import * as EmailService from "./EmailService";
+import * as EmailService from "./EmailService.js";
 
 const appLayer = EmailService.EmailServiceLive;
 
@@ -10,7 +10,7 @@ const runtimePromise = Effect.runPromise(
 );
 
 export async function runPromise<E, A>(
-  effect: Effect.Effect<Layer.Layer.Success<typeof appLayer>, E, A>
+  effect: Effect.Effect<A, E, Layer.Layer.Success<typeof appLayer>>
 ): Promise<A> {
   const runtime = await runtimePromise;
   return Runtime.runPromise(runtime)(effect);

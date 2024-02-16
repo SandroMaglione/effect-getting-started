@@ -6,10 +6,10 @@ export interface EmailService {
    */
   readonly sendEmail: (
     message: string
-  ) => Effect.Effect<never, ConfigError.ConfigError, string>;
+  ) => Effect.Effect<string, ConfigError.ConfigError>;
 }
 
-export const EmailService = Context.Tag<EmailService>("@app/EmailService");
+export const EmailService = Context.GenericTag<EmailService>("@app/EmailService");
 
 export const EmailServiceLive = Layer.effect(
   EmailService,

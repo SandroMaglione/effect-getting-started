@@ -1,8 +1,8 @@
 import { Context, Effect, pipe } from "effect";
 import { describe, expect, it } from "vitest";
 
-const Port = Context.Tag<{ PORT: number }>();
-const Timeout = Context.Tag<{ TIMEOUT: number }>();
+const Port = Context.GenericTag<{ PORT: number }>("@services/Port");
+const Timeout = Context.GenericTag<{ TIMEOUT: number }>("@services/Timeout");
 
 describe("Context", () => {
   it("add and merge work the same", () => {

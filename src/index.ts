@@ -1,5 +1,5 @@
-import { main } from "./Core";
-import { runPromise } from "./Runtime";
+import { main } from "./Core.js";
+import { runPromise } from "./Runtime.js";
 
 runPromise(main)
   .then(console.log)

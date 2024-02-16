@@ -1,4 +1,5 @@
-import * as Fs from "@effect/platform-node/FileSystem";
+import * as NodeFs from "@effect/platform-node/NodeFileSystem";
+import * as Fs from "@effect/platform/FileSystem";
 import { Console, Effect, Metric } from "effect";
 
 const numberCounter = Metric.counter("request_count", {
@@ -11,7 +12,7 @@ Effect.gen(function* (_) {
   yield* _(Console.log(`Got file`, file));
 })
   .pipe(
-    Effect.provide(Fs.layer),
+    Effect.provide(NodeFs.layer),
     Effect.catchTags({
       BadArgument: (error) => Console.error(error),
       SystemError: (error) => Console.error(error),

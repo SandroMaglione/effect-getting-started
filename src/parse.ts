@@ -1,8 +1,8 @@
 import { Effect, Layer, Option, pipe } from "effect";
 import { z } from "zod";
-import * as Base64 from "./Base64";
-import * as JsonParse from "./JsonParse";
-import { parseZod } from "./Zod";
+import * as Base64 from "./Base64.js";
+import * as JsonParse from "./JsonParse.js";
+import { parseZod } from "./Zod.js";
 
 const zodSchema = z.object({ example: z.string() });
 

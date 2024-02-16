@@ -11,10 +11,10 @@ export class JsonParseError extends Data.TaggedError("JsonParseError")<{
 export interface JsonParseService {
   readonly parse: (
     source: string
-  ) => Effect.Effect<never, JsonParseError, JsonString>;
+  ) => Effect.Effect<JsonString, JsonParseError>;
 }
 
-export const JsonParseService = Context.Tag<JsonParseService>(
+export const JsonParseService = Context.GenericTag<JsonParseService>(
   "@app/JsonParseService"
 );
 

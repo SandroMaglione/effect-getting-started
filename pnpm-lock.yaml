@@ -6,17 +6,17 @@ settings:
 
 dependencies:
   '@effect/platform':
-    specifier: ^0.39.0
-    version: 0.39.0(@effect/schema@0.56.1)(effect@2.0.0-next.62)
+    specifier: ^0.45.3
+    version: 0.45.3(@effect/schema@0.62.7)(effect@2.3.6)
   '@effect/platform-node':
-    specifier: ^0.39.0
-    version: 0.39.0(@effect/platform@0.39.0)(effect@2.0.0-next.62)
+    specifier: ^0.44.4
+    version: 0.44.4(@effect/platform@0.45.3)(effect@2.3.6)
   '@effect/schema':
-    specifier: ^0.56.1
-    version: 0.56.1(effect@2.0.0-next.62)(fast-check@3.15.0)
+    specifier: ^0.62.7
+    version: 0.62.7(effect@2.3.6)(fast-check@3.15.0)
   effect:
-    specifier: 2.0.0-next.62
-    version: 2.0.0-next.62
+    specifier: 2.3.6
+    version: 2.3.6
   zod:
     specifier: ^3.22.4
     version: 3.22.4
@@ -44,38 +44,49 @@ packages:
       '@jridgewell/trace-mapping': 0.3.9
     dev: true
 
-  /@effect/platform-node@0.39.0(@effect/platform@0.39.0)(effect@2.0.0-next.62):
-    resolution: {integrity: sha512-5ZggtTpdXntLpv1aWfEc6xIHVKCuRfv71v584ZrTr996uAdyPgwV4YLSt09wMmZpG7lBeu8w9A+twvEAPLzJrQ==}
+  /@effect/platform-node-shared@0.1.11(@effect/platform@0.45.3)(effect@2.3.6):
+    resolution: {integrity: sha512-+87/biebOBH7Iq79M5+j0R3mvwFr5kBnqwv0zUdAfHSJgus/DjASPgudqEikZJ/nM7FEgOoFsFtDPRAm7P3mrA==}
     peerDependencies:
-      '@effect/platform': ^0.39.0
-      effect: 2.0.0-next.62
+      '@effect/platform': ^0.45.3
+      effect: ^2.3.6
     dependencies:
-      '@effect/platform': 0.39.0(@effect/schema@0.56.1)(effect@2.0.0-next.62)
-      effect: 2.0.0-next.62
-      mime: 3.0.0
+      '@effect/platform': 0.45.3(@effect/schema@0.62.7)(effect@2.3.6)
+      effect: 2.3.6
       multipasta: 0.1.21
     dev: false
 
-  /@effect/platform@0.39.0(@effect/schema@0.56.1)(effect@2.0.0-next.62):
-    resolution: {integrity: sha512-bwvIVdyWAMv42Wi6/EIP8GJagPGEFU8tlkPycH5KcyZWmyi48ai3X1PbVqGdh2A18MsAyTOsVdfBI+bhnCS0Jw==}
+  /@effect/platform-node@0.44.4(@effect/platform@0.45.3)(effect@2.3.6):
+    resolution: {integrity: sha512-5fgDCNGnWLPc98pfUstwReFYaAcUp6Ag7IYLQV9t1c0G/sHt04/wWgjG3DO667k8aYzie3tyhPaT37moJ3guKQ==}
     peerDependencies:
-      '@effect/schema': ^0.56.0
-      effect: 2.0.0-next.62
+      '@effect/platform': ^0.45.3
+      effect: ^2.3.6
     dependencies:
-      '@effect/schema': 0.56.1(effect@2.0.0-next.62)(fast-check@3.15.0)
-      effect: 2.0.0-next.62
+      '@effect/platform': 0.45.3(@effect/schema@0.62.7)(effect@2.3.6)
+      '@effect/platform-node-shared': 0.1.11(@effect/platform@0.45.3)(effect@2.3.6)
+      effect: 2.3.6
+      mime: 3.0.0
+    dev: false
+
+  /@effect/platform@0.45.3(@effect/schema@0.62.7)(effect@2.3.6):
+    resolution: {integrity: sha512-qVginaqVdtKN+OKbGrlAiDGzvO6V1keVFLnjUY4M+YUTmgCVo68Z4OsCKMvD+fwKR5HaqFPqKnZNh+LvlIfW8g==}
+    peerDependencies:
+      '@effect/schema': ^0.62.7
+      effect: ^2.3.6
+    dependencies:
+      '@effect/schema': 0.62.7(effect@2.3.6)(fast-check@3.15.0)
+      effect: 2.3.6
       find-my-way-ts: 0.1.1
       multipasta: 0.1.21
       path-browserify: 1.0.1
     dev: false
 
-  /@effect/schema@0.56.1(effect@2.0.0-next.62)(fast-check@3.15.0):
-    resolution: {integrity: sha512-cfEyHLXPdzSKzJU/yYrPjFd0iVHPydh+NT0sgTe4bzXbcvOsKZuvQ86cAAwXN7lxY0N5cPes9ACxUxTdkEaNlw==}
+  /@effect/schema@0.62.7(effect@2.3.6)(fast-check@3.15.0):
+    resolution: {integrity: sha512-AGrnQDC0hw5VknesZm4zGjY7EkgKwp+5kzMcFlna96MFLaGOGinZiZeldGep7ByNWsa4Bbz9BfEQcr/knqJpjw==}
     peerDependencies:
-      effect: 2.0.0-next.62
+      effect: ^2.3.6
       fast-check: ^3.13.2
     dependencies:
-      effect: 2.0.0-next.62
+      effect: 2.3.6
       fast-check: 3.15.0
     dev: false
 
@@ -567,8 +578,8 @@ packages:
     engines: {node: '>=0.3.1'}
     dev: true
 
-  /effect@2.0.0-next.62:
-    resolution: {integrity: sha512-fJhLzf5oouL4WZP314ZJgZz5Bel7OHTY+YFxO06sW1mSvqJz0s28y7jDHr5zhtTNM1YRvzbeLYUYfNaJYKqx1A==}
+  /effect@2.3.6:
+    resolution: {integrity: sha512-R7Sqjc/6Wg+hZbtotklWunLUe5hoEG/a8SP/4BGydNCbR2DZuc15ZApoZA1gVMcT/PDMN3WHEiVlqLkt+TtdBA==}
     dev: false
 
   /esbuild@0.19.10:

@@ -8,10 +8,10 @@ class Base64DecodeError extends Data.TaggedError("Base64DecodeError")<{
 export interface Base64Service {
   readonly decode: (
     source: string
-  ) => Effect.Effect<never, Base64DecodeError, string>;
+  ) => Effect.Effect<string, Base64DecodeError>;
 }
 
-export const Base64Service = Context.Tag<Base64Service>("@app/Base64Service");
+export const Base64Service = Context.GenericTag<Base64Service>("@app/Base64Service");
 
 export const Base64ServiceLive = Layer.succeed(
   Base64Service,

@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import * as Base64 from "../src/Base64";
+import * as Base64 from "../src/Base64.js";
 
 describe("Base64", () => {
   describe("decode", () => {

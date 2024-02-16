@@ -1,5 +1,5 @@
 import { Console, Effect, LogLevel, Logger } from "effect";
-import * as EmailService from "./EmailService";
+import * as EmailService from "./EmailService.js";
 
 const program = Effect.gen(function* (_) {
   yield* _(Effect.logInfo("This is running!"));

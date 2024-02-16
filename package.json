@@ -1,6 +1,7 @@
 {
   "name": "effect-vs-ts",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "index": "SENDER=example@gmail.com ts-node src/index.ts",
     "parse": "ts-node src/parse.ts",
@@ -18,10 +19,10 @@
     "vitest": "^1.1.0"
   },
   "dependencies": {
-    "@effect/platform": "^0.39.0",
-    "@effect/platform-node": "^0.39.0",
-    "@effect/schema": "^0.56.1",
-    "effect": "2.0.0-next.62",
+    "@effect/platform": "^0.45.3",
+    "@effect/platform-node": "^0.44.4",
+    "@effect/schema": "^0.62.7",
+    "effect": "2.3.6",
     "zod": "^3.22.4"
   }
 }

@@ -56,7 +56,8 @@ const GetPokemonResolver = RequestResolver.fromEffect((req: GetPokemon) =>
       ParseError: (error) => new PokemonClientError({ error, reason: "Parse" }),
       ResponseError: (error) =>
         new PokemonClientError({ error, reason: "Response" }),
-    })
+    }),
+    Effect.scoped
   )
 );
 
@@ -77,7 +78,8 @@ const GetTypeResolver = RequestResolver.fromEffect((req: GetType) =>
       ParseError: (error) => new PokemonClientError({ error, reason: "Parse" }),
       ResponseError: (error) =>
         new PokemonClientError({ error, reason: "Response" }),
-    })
+    }),
+    Effect.scoped
   )
 );
 
@@ -96,7 +98,7 @@ const cacheSource = Cache.make({
 });
 
 const CacheContext =
-  Context.Tag<Effect.Effect.Success<typeof cacheSource>>("@app/cache");
+  Context.GenericTag<Effect.Effect.Success<typeof cacheSource>>("@app/cache");
 
 Effect.gen(function* (_) {
   const cache = yield* _(CacheContext);

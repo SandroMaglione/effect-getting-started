@@ -3,18 +3,18 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "index": "SENDER=example@gmail.com ts-node src/index.ts",
-    "parse": "ts-node src/parse.ts",
-    "division": "ts-node src/division.ts",
-    "batching": "ts-node src/batching.ts",
-    "metric": "ts-node src/metric.ts",
+    "index": "SENDER=example@gmail.com tsx src/index.ts",
+    "parse": "tsx src/parse.ts",
+    "division": "tsx src/division.ts",
+    "batching": "tsx src/batching.ts",
+    "metric": "tsx src/metric.ts",
     "tsc": "tsc -p tsconfig.json",
     "test": "vitest",
     "coverage": "vitest run --coverage"
   },
   "devDependencies": {
     "@types/node": "^20.9.0",
-    "ts-node": "^10.9.1",
+    "tsx": "^4.7.1",
     "typescript": "^5.2.2",
     "vitest": "^1.1.0"
   },

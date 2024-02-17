@@ -45,6 +45,10 @@ const make = {
             new Promise<void>((resolve, reject) => {
               const writeStream = NFS.createWriteStream(toFilename);
 
+              /**
+               * IncomingMessage
+               * https://effect-ts.github.io/effect/platform/Http/IncomingMessage.ts.html
+               */
               const request = http.get(url, (response) => {
                 response.pipe(writeStream);
                 writeStream.on("finish", () => {

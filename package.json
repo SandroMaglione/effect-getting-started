@@ -26,6 +26,7 @@
     "effect": "2.3.6",
     "gunzip-file": "^0.1.1",
     "node-html-parser": "^6.1.12",
+    "xml2js": "^0.6.2",
     "zod": "^3.22.4"
   }
 }

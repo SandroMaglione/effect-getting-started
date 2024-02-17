@@ -1,5 +1,5 @@
 import * as Http from "@effect/platform/HttpClient";
-import { Context, Effect, Layer } from "effect";
+import { Console, Context, Effect, Layer } from "effect";
 
 const make = {
   getWebpage: ({ url }: { url: string }) =>
@@ -7,6 +7,9 @@ const make = {
       const client = Http.client.fetchOk();
       const req = Http.request.get(url);
       const response = yield* _(req.pipe(client, Effect.scoped));
+
+      yield* _(Console.log(response));
+
       return yield* _(response.text);
     }),
 };

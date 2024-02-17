@@ -1,7 +1,6 @@
 import { Context, Data, Effect, Layer } from "effect";
 import * as NodeHtmlParser from "node-html-parser";
-
-export type HtmlParseElement = NodeHtmlParser.HTMLElement;
+import * as ParsedElement from "./ParsedElement.js";
 
 class HtmlParseError extends Data.TaggedError("HtmlParseError")<{
   error: unknown;
@@ -16,7 +15,9 @@ const make = {
           catch: (error) => new HtmlParseError({ error }),
         })
       );
-    }),
+    }).pipe(
+      Effect.map((element) => new ParsedElement.ParsedElement({ element }))
+    ),
 };
 
 export class HtmlParser extends Context.Tag("HtmlParser")<

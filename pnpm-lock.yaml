@@ -17,6 +17,9 @@ dependencies:
   effect:
     specifier: 2.3.6
     version: 2.3.6
+  gunzip-file:
+    specifier: ^0.1.1
+    version: 0.1.1
   node-html-parser:
     specifier: ^6.1.12
     version: 6.1.12
@@ -679,6 +682,10 @@ packages:
     dependencies:
       resolve-pkg-maps: 1.0.0
     dev: true
+
+  /gunzip-file@0.1.1:
+    resolution: {integrity: sha512-DjDExBKHuhyhHOs8HeGV5dw6wY6eYTl4pAHz27oy8XppgBK60vmG/G3bY09zyT9PXX4TjmnEF4hYoRn61Fctlg==}
+    dev: false
 
   /he@1.2.0:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}

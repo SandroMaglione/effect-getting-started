@@ -24,6 +24,7 @@
     "@effect/platform-node": "^0.44.4",
     "@effect/schema": "^0.62.7",
     "effect": "2.3.6",
+    "gunzip-file": "^0.1.1",
     "node-html-parser": "^6.1.12",
     "zod": "^3.22.4"
   }

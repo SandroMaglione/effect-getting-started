@@ -2,9 +2,7 @@ import * as Fs from "@effect/platform/FileSystem";
 import { Context, Data, Effect } from "effect";
 import * as NFS from "fs";
 import * as http from "http";
-
-// @ts-expect-error
-import gunzip from "gunzip-file";
+import * as Gzip from "./Gzip.js";
 
 class FileError extends Data.TaggedError("FileError")<{
   error: unknown;
@@ -77,6 +75,8 @@ const make = {
   }) =>
     Effect.gen(function* (_) {
       const fs = yield* _(Fs.FileSystem);
+      const gzip = yield* _(Gzip.Gzip);
+
       const existsExtractedFilename = yield* _(fs.exists(extractedFilename));
       if (useCachedFile && existsExtractedFilename) {
         return yield* _(
@@ -85,16 +85,8 @@ const make = {
       }
 
       yield* _(Effect.logDebug(`extracting ${gzipFilename}...`));
-      yield* _(
-        // TODO: Effect.async
-        Effect.tryPromise({
-          try: () =>
-            new Promise<void>((resolve, _) => {
-              gunzip(gzipFilename, extractedFilename, () => resolve());
-            }),
-          catch: (error) => new FileError({ error }),
-        })
-      );
+
+      yield* _(gzip({ gzipFilename, extractedFilename }));
     }),
 };
 

@@ -8,7 +8,7 @@ export class DivideByZeroError extends Data.TaggedError("DivideByZeroError")<{
 const divide = (
   a: number,
   b: number
-): Either.Either<DivideByZeroError, number> =>
+): Either.Either<number, DivideByZeroError> =>
   b === 0 ? Either.left(new DivideByZeroError({ a, b })) : Either.right(a / b);
 
 const program = Effect.gen(function* (_) {

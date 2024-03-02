@@ -20,10 +20,10 @@
     "vitest": "^1.1.0"
   },
   "dependencies": {
-    "@effect/platform": "^0.45.3",
-    "@effect/platform-node": "^0.44.4",
-    "@effect/schema": "^0.62.7",
-    "effect": "2.3.6",
+    "@effect/platform": "^0.46.3",
+    "@effect/platform-node": "^0.44.11",
+    "@effect/schema": "^0.63.2",
+    "effect": "2.4.1",
     "gunzip-file": "^0.1.1",
     "node-html-parser": "^6.1.12",
     "xml2js": "^0.6.2",

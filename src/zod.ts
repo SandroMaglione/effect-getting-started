@@ -12,7 +12,7 @@ class ZodParseError<In> extends Data.TaggedError("ZodParseError")<{
  */
 export const parseZod =
   <ReqOut, ReqIn>(schema: z.Schema<ReqOut, z.ZodTypeDef, ReqIn>) =>
-  <T>(data: T): Either.Either<ZodParseError<ReqIn>, ReqOut> => {
+  <T>(data: T): Either.Either<ReqOut, ZodParseError<ReqIn>> => {
     const parsed = schema.safeParse(data);
     return parsed.success
       ? Either.right(parsed.data)

@@ -9,6 +9,7 @@
     "batching": "tsx src/batching.ts",
     "metric": "tsx src/metric.ts",
     "scrape": "tsx src/scrape.ts",
+    "animechan": "BASE_URL='https://animechan.xyz/api' node --import tsx src/animechan/bin.ts",
     "tsc": "tsc -p tsconfig.json",
     "test": "vitest",
     "coverage": "vitest run --coverage"

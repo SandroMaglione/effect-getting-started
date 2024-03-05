@@ -23,6 +23,9 @@ dependencies:
   node-html-parser:
     specifier: ^6.1.12
     version: 6.1.12
+  wanakana:
+    specifier: ^5.3.1
+    version: 5.3.1
   xml2js:
     specifier: ^0.6.2
     version: 0.6.2
@@ -1097,6 +1100,11 @@ packages:
       - supports-color
       - terser
     dev: true
+
+  /wanakana@5.3.1:
+    resolution: {integrity: sha512-OSDqupzTlzl2LGyqTdhcXcl6ezMiFhcUwLBP8YKaBIbMYW1wAwDvupw2T9G9oVaKT9RmaSpyTXjxddFPUcFFIw==}
+    engines: {node: '>=12'}
+    dev: false
 
   /which@2.0.2:
     resolution: {integrity: sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==}
